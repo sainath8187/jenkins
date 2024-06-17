@@ -13,6 +13,10 @@ pipeline {
         choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
         password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
     }
+    environment {
+        Deploy_To = 'Production'
+
+    }
     stages {
         stage('Build') {
             steps {
@@ -37,6 +41,17 @@ pipeline {
                 echo "choice ${params.CHOCIE}"
                 echo "password ${params.PASSWORD}"
             }
+        }
+    }
+    post {
+        always {
+            echo 'Iwill always say Hello again'
+        }
+        success {
+            echo 'I will run when pipeline is success'
+        }
+        failure {
+            echo 'I will run if pipeline is failure'
         }
     }
 }
